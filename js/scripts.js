@@ -65,7 +65,20 @@ function listMovies() {
     // onclick="javascript: submit()"
 }
 
+function matineeCheck(selectedTime) {
+    if(selectedTime< 1600) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
+function displayTicket(newTicket) {
+    $("#ticket").empty();
+    var newTicketPrice = newTicket.price();
+    $("#ticket").append('<p>Your ticket for ' + newTicket.movieTitle + ' will cost ' + newTicketPrice + '</p>');
+    $("#ticket").show();
+}
 
 
 $(document).ready(function() {
@@ -78,6 +91,21 @@ $(document).ready(function() {
         var selectedMovie = movies[selectedMovieIndex];
         console.log(selectedMovie);
         selectedMovie.listTimes();
+
+        $("form#times").submit(function(event) {
+            event.preventDefault();
+            var selectedTimeIndex = $("input:checked").val();
+            var selectedTime = movies[selectedMovieIndex].times[selectedTimeIndex];
+            var matinee = matineeCheck(selectedTime);
+
+            $("#age").show();
+            $("form#age").submit(function(event) {
+                event,preventDefault();
+                var inputtedAge = parseInt($("input#inputted-age").val());
+                var newTicket = new Ticket(selectedMovie.movieTitle, matinee, selectedMovie.newRelease, inputtedAge);
+                displayTicket(newTicket);
+            });
+        });
     });
 
 
