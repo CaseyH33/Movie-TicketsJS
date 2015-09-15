@@ -6,7 +6,7 @@ function Ticket(movieTitle, matinee, newRelease, userAge) {
 }
 
 Ticket.prototype.price = function() {
-    if (this.matinee === true) {
+    if ((this.matinee === true) || (this.newRelease === false) || (this.age >= 65)) {
         return 5;
     } else {
         return 10;
