@@ -29,3 +29,13 @@ describe('Ticket', function() {
 
 
 });
+
+
+describe('Movie', function() {
+    it(" creates a new ticket with the given specifications", function()  {
+        var testMovie = new Movie("Straight Outta Portland", ["08:00", "12:00"]);
+        expect(testMovie.movieTitle).to.equal("Straight Outta Portland");
+        expect(testMovie.times).to.eql(["08:00", "12:00"]);
+
+    });
+});
