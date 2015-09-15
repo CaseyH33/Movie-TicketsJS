@@ -20,6 +20,17 @@ function Movie (movieTitle, times, newRelease) {
     this.newRelease = newRelease;
 }
 
+Movie.prototype.listTimes = function() {
+    $("#show-movie-times").empty();
+    this.times.forEach(function(time) {
+        $("#show-movie-times").append('<div class="new-time"' +
+                                            '<div class = "form-group">' +
+                                            '<label for="movie-time">' +
+                                            '<input type="radio" name="movie-time" value="time">' + time + '<br>');
+                                        });
+    $("#times").show();
+}
+
 var movies = [];
 
 var straightOuttaCompton = new Movie("Straight Outta Compton", ["1000", "1215", "1630", "1945", "2200"], false);
@@ -30,3 +41,44 @@ var mazeRunner = new Movie("Maze Runner: The Scorch Trials", ["1000", "1215", "1
 var starWars = new Movie("Star Wars: The Force Awakens", ["23:59"], true);
 
 movies.push(straightOuttaCompton, madMax, jurassicWorld, everest, mazeRunner, starWars);
+
+
+function sortMovies() {
+    movies.sort(function(obj1, obj2) {
+        if(obj1.movieTitle > obj2.movieTitle) {
+            return 1;
+        }
+        if(obj1.movieTitle < obj2.movieTitle) {
+            return -1;
+        }
+        return 0;
+    });
+}
+
+function listMovies() {
+    movies.forEach(function(movie, index) {
+        $("#show-movie-list").append('<div class="new-movie"' +
+                                        '<div class = "form-group">' +
+                                        '<label for="selected-movie">' +
+                                        '<input type="radio" name="selected-movie" value=' + index + '>' +   movie.movieTitle + '<br>');
+    });
+    // onclick="javascript: submit()"
+}
+
+
+
+
+$(document).ready(function() {
+    sortMovies();
+    listMovies();
+
+    $("form#movies").submit(function(event) {
+        event.preventDefault();
+        var selectedMovieIndex = $("input:checked").val();
+        var selectedMovie = movies[selectedMovieIndex];
+        console.log(selectedMovie);
+        selectedMovie.listTimes();
+    });
+
+
+});
